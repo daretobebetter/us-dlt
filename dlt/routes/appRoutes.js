@@ -66,7 +66,13 @@ router.get('/acquisition/:id', (req, res, next) => {
         const ed = new common.EncryptDecrypt();
         // formating to meet client spec
         result = JSON.parse(final_result);
-        result = result.map(item => JSON.parse(ed.decrypt(item.data)));
+        result = result.map(item => {
+            if (item.data) {
+                return JSON.parse(ed.decrypt(item.data));
+            } else {
+                return item;
+            }
+        });
         result.forEach(function (obj) { obj._id = obj.id; }); // adding the _id - as per the model expected by the client 
         result = result[0];
         res.status(200).json(result);

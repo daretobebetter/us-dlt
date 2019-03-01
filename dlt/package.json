@@ -4,6 +4,7 @@
   "description": "Hyperledger Fabric Microservices",
   "main": "server.js",
   "scripts": {
+    "dev": "nodemon ./src/server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -12,6 +13,7 @@
     "express": "^4.16.2",
     "fabric-ca-client": "^1.4.0",
     "fabric-client": "^1.4.0",
-    "grpc": "^1.18.0"
+    "grpc": "^1.18.0",
+    "log4js": "^4.0.2"
   }
 }

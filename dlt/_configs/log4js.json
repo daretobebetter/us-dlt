@@ -1,0 +1,41 @@
+{
+    "appenders": {
+        "console": { "type": "console" },
+        "access": {
+            "type": "dateFile",
+            "filename": "logs/dlt-services-access.log",
+            "pattern": "-yyyy-MM-dd",
+            "category": "http"
+        },
+        "app": {
+            "type": "file",
+            "filename": "logs/dlt-services.log",
+            "maxLogSize": 10485760,
+            "numBackups": 3
+        },
+        "errorFile": {
+            "type": "file",
+            "filename": "logs/dlt-services-errors.log",
+            "pattern": "-yyyy-MM-dd"
+        },
+        "errors": {
+            "type": "logLevelFilter",
+            "level": "ERROR",
+            "appender": "errorFile"
+        }
+    },
+    "categories": {
+        "default": {
+            "appenders": ["app", "errors", "console"],
+            "level": "DEBUG"
+        },
+        "http": {
+            "appenders": ["access"],
+            "level": "DEBUG"
+        },
+        "consoleLog": {
+            "appenders": ["console"],
+            "level": "DEBUG"
+        }
+    }
+}
