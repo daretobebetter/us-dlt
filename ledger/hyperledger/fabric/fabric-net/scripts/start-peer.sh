@@ -38,4 +38,4 @@ copyAdminCert $CORE_PEER_MSPCONFIGPATH
 # Start the peer
 log "Starting peer '$CORE_PEER_ID' with MSP at '$CORE_PEER_MSPCONFIGPATH'"
 env | grep CORE
-peer node start
+peer node start --peer-chaincodedev=false

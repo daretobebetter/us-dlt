@@ -36,6 +36,7 @@ if [ -d ${DDIR} ]; then
    log "Cleaning up the data directory from previous run at $DDIR"
    rm -rf ${SDIR}/data
 fi
+rm -rf ${SDIR}/docker-compose.yml
 mkdir -p ${DDIR}/logs
 
 # Create the docker-compose file

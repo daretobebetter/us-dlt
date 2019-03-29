@@ -8,6 +8,11 @@
 source $(dirname "$0")/env.sh
 initOrgVars $ORG
 
+ST="Maryland"
+L="Rockville"
+O="United Solutions LLC"
+OU="IT"
+
 set -e
 
 # Wait for the root CA to start
@@ -26,14 +31,23 @@ done
 aff="${aff#\\n   }"
 sed -i "/affiliations:/a \\   $aff" \
    $FABRIC_CA_SERVER_HOME/fabric-ca-server-config.yaml
-sed -i "/North Carolina/ s/North Carolina/Maryland/" \
+sed -i "/North Carolina/ s/North Carolina/$ST/" \
    $FABRIC_CA_SERVER_HOME/fabric-ca-server-config.yaml
-sed -i "/ L:/ s/ L:/ L: Rockville/" \
+sed -i "/ L:/ s/ L:/ L: $L/" \
    $FABRIC_CA_SERVER_HOME/fabric-ca-server-config.yaml
-sed -i "/O: Hyperledger/ s/O: Hyperledger/O: \"United Solutions LLC\"/" \
+sed -i "/O: Hyperledger/ s/O: Hyperledger/O: $O/" \
    $FABRIC_CA_SERVER_HOME/fabric-ca-server-config.yaml
-sed -i "/OU: Fabric/ s/OU: Fabric/OU: IT/" \
+sed -i "/OU: Fabric/ s/OU: Fabric/OU: $OU/" \
    $FABRIC_CA_SERVER_HOME/fabric-ca-server-config.yaml
+sed -i "83s/$/ $FABRIC_CA_SERVER_CSR_HOSTS/" \
+   $FABRIC_CA_SERVER_HOME/fabric-ca-server-config.yaml
+sed -i "63s/false/true/" \
+   $FABRIC_CA_SERVER_HOME/fabric-ca-server-config.yaml
+sed -i "134s/true/false/" \
+   $FABRIC_CA_SERVER_HOME/fabric-ca-server-config.yaml
+sed -i "129s/\"\"/\"org1\"/" \
+   $FABRIC_CA_SERVER_HOME/fabric-ca-server-config.yaml
+
 
 # Initialize the intermediate CA
 fabric-ca-server init -b $BOOTSTRAP_USER_PASS -u $PARENT_URL

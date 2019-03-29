@@ -25,9 +25,7 @@ function main {
    # Set ORDERER_PORT_ARGS to the args needed to communicate with the 1st orderer
    IFS=', ' read -r -a OORGS <<< "$ORDERER_ORGS"
    initOrdererVars ${OORGS[0]} 1
-   # Thuan Nguyen - Disable TLS and CLIENTAUTH
-   #export ORDERER_PORT_ARGS="-o $ORDERER_HOST:7050 --tls --cafile $CA_CHAINFILE --clientauth"
-   export ORDERER_PORT_ARGS="-o $ORDERER_HOST:7050"
+   export ORDERER_PORT_ARGS="-o $ORDERER_HOST:7050 --tls --cafile $CA_CHAINFILE --clientauth"
 
    # Convert PEER_ORGS to an array named PORGS
    IFS=', ' read -r -a PORGS <<< "$PEER_ORGS"
@@ -66,8 +64,6 @@ function main {
    logr "Instantiating chaincode on $PEER_HOST ..."
    peer chaincode instantiate -C $CHANNEL_NAME -n mycc -v 1.0 -l node -c '{"Args":["init","a","100","b","200"]}' -P "$POLICY" $ORDERER_CONN_ARGS
    peer chaincode instantiate -C $CHANNEL_NAME -n asset -v 1.0 -l node -c '{"Args":["init"]}' -P "$POLICY" $ORDERER_CONN_ARGS
-   peer chaincode instantiate -C $CHANNEL_NAME -n seller -v 1.0 -l node -c '{"Args":["init"]}' -P "$POLICY" $ORDERER_CONN_ARGS
-   peer chaincode instantiate -C $CHANNEL_NAME -n catalog -v 1.0 -l node -c '{"Args":["init"]}' -P "$POLICY" $ORDERER_CONN_ARGS
 
    # Query chaincode from the 1st peer of the 1st org
    initPeerVars ${PORGS[0]} 1
@@ -222,8 +218,6 @@ function installChaincode {
    logr "Installing chaincode on $PEER_HOST ..."
    peer chaincode install -n mycc -v 1.0 -l node -p /opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode/chaincode_example02/node
    peer chaincode install -n asset -v 1.0 -l node -p /opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode/asset/node
-   peer chaincode install -n seller -v 1.0 -l node -p /opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode/seller/node
-   peer chaincode install -n catalog -v 1.0 -l node -p /opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode/catalog/node
 }
 
 function fetchConfigBlock {

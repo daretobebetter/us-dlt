@@ -27,7 +27,7 @@ function enrollCAAdmin {
    log "Enrolling with $CA_NAME as bootstrap identity ..."
    export FABRIC_CA_CLIENT_HOME=$HOME/cas/$CA_NAME
    export FABRIC_CA_CLIENT_TLS_CERTFILES=$CA_CHAINFILE
-   fabric-ca-client enroll -d -u http://$CA_ADMIN_USER_PASS@$CA_HOST:7054
+   fabric-ca-client enroll -d -u https://$CA_ADMIN_USER_PASS@$CA_HOST:7054
 }
 
 function registerIdentities {
@@ -80,7 +80,7 @@ function getCACerts {
       initOrgVars $ORG
       log "Getting CA certs for organization $ORG and storing in $ORG_MSP_DIR"
       export FABRIC_CA_CLIENT_TLS_CERTFILES=$CA_CHAINFILE
-      fabric-ca-client getcacert -d -u http://$CA_HOST:7054 -M $ORG_MSP_DIR
+      fabric-ca-client getcacert -d -u https://$CA_HOST:7054 -M $ORG_MSP_DIR
       finishMSPSetup $ORG_MSP_DIR
       # If ADMINCERTS is true, we need to enroll the admin now to populate the admincerts directory
       if [ $ADMINCERTS ]; then
