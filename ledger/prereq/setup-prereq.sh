@@ -17,7 +17,8 @@ echo "Change executable permission for Docker Compose..."
 sudo chmod +x /usr/local/bin/docker-compose
 
 echo "Installing Go Programming Language..."
-sudo tar -C /usr/local -zxvf ./go1.11.2.tar.gz
+sudo wget https://dl.google.com/go/go1.11.2.linux-amd64.tar.gz
+sudo tar -C /usr/local -zxvf ./go1.11.2.linux-amd64.tar.gz
 
 echo "Install Node.js Runtime and NPM..."
 sudo tar -C /usr/local -zxvf ./node-v8.9.3.tar.gz
