@@ -5,21 +5,12 @@ echo "Installing cURL..."
 sudo apt-get install curl -y
 
 echo "Install Node.js Runtime and NPM..."
-sudo tar -C /usr/local -zxvf ./node-v8.9.3.tar.gz
+sudo mkdir /usr/local/nvm
+sudo chown -R dlt:dlt /usr/local/nvm
 
-echo "Update PATH for root user..."
-sudo sed -i '$ a #Update PATH and set GOPATH' ~root/.bashrc
-sudo sed -i '$ a export PATH=$PATH:/usr/local/bin:/usr/local/node/bin' ~root/.bashrc
+export NVM_DIR=/usr/local/nvm
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 
-echo "Update PATH for user..."
-cat << EOF >> ~/.bashrc
-
-export PATH=$PATH:/usr/local/bin:/usr/local/node/bin
-EOF
 source ~/.bashrc
 
-echo "Upgrade NPM to version 5.6.0..."
-npm install npm@5.6.0 -g
-
-echo "Installing Python version 2.7..."
-sudo apt-get install python -y
+nvm install 10.15
