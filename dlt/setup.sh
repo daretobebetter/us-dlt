@@ -16,3 +16,9 @@ sudo apt-get install python -y
 
 echo "Installing Make..."
 sudo apt-get install make -y
+
+echo "Updating repos..."
+sudo apt-get update
+
+echo "Installing g++..."
+sudo apt-get install g++ -y
