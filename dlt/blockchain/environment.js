@@ -1,11 +1,11 @@
 //IP address for the DLT
 const settings = {
-    DLT_IP: '50.16.126.88',
-    PEERICA: 'ica.peer.hhs.gov',
-    PEERORG: 'peer.hhs.gov',
-    ORDERERORG: 'orderer.hhs.gov',
-    PEER: 'peer1.peer.hhs.gov',
-    ORDERER: 'orderer1.orderer.hhs.gov'
+    DLT_IP: 'DLT_IP',
+    PEERICA: 'ica.PEER_ORG',
+    PEERORG: 'PEER_ORG',
+    ORDERERORG: 'ORDERER_ORG',
+    PEER: 'peer1.PEER_ORG',
+    ORDERER: 'orderer1.ORDERER_ORG'
 }
 
 module.exports.settings = settings;
