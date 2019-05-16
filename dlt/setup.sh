@@ -13,3 +13,6 @@ wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 
 echo "Installing Python version 2.7..."
 sudo apt-get install python -y
+
+echo "Installing Make..."
+sudo apt-get install make -y
