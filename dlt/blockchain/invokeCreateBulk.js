@@ -16,14 +16,12 @@ var env = require('./environment');
 
 //
 var fabric_client = new Fabric_Client();
-//Thuan Nguyen == CA root chain and client cert/keys are copied from Fabric network
 let peerCert = fs.readFileSync(path.join(__dirname, '../hfc-key-store/' + env.settings.PEERORG + '-ca-chain.pem'));
 let ordererCert = fs.readFileSync(path.join(__dirname, '../hfc-key-store/' + env.settings.ORDERERORG + '-ca-chain.pem'));
 let clientKey = fs.readFileSync(path.join(__dirname, '../hfc-key-store/peer1.' + env.settings.PEERORG + '-cli-client.key'));
 let clientCert = fs.readFileSync(path.join(__dirname, '../hfc-key-store/peer1.' + env.settings.PEERORG + '-cli-client.crt'));
 
 fabric_client.setTlsClientCertAndKey(Buffer.from(clientCert).toString(), Buffer.from(clientKey).toString());
-//Thuan Nguyen
 
 // setup the fabric network
 var channel = fabric_client.newChannel('mychannel');
