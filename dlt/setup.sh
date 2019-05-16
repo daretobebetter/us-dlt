@@ -10,7 +10,3 @@ sudo chown -R dlt:dlt /usr/local/nvm
 
 export NVM_DIR=/usr/local/nvm
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
-
-source ~/.bashrc
-
-nvm install 10.15
