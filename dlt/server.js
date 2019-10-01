@@ -71,7 +71,7 @@ let apiKeyAuth = require('./api-key-auth'); // encryption
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '2048mb' }));
 app.use(apiKeyAuth({}));
 app.use('/', appRoutes);
 http.createServer(app).listen(port, () => console.log(`Backend DLT services started and run on port ${port}`));
