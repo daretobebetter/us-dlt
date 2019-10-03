@@ -38,7 +38,7 @@ router.get('/acquisition', (req, res, next) => {
                 return item;
             }
         });
-        result.forEach(function (obj) { obj._id = obj.id; }); // adding the _id - as per the model expected by the client 
+        result.forEach(function (obj) { obj._id = obj.id; }); // adding the _id - as per the model expected by the client
         res.status(200).json(result);
     });
 
@@ -73,7 +73,7 @@ router.get('/acquisition/:id', (req, res, next) => {
                 return item;
             }
         });
-        result.forEach(function (obj) { obj._id = obj.id; }); // adding the _id - as per the model expected by the client 
+        result.forEach(function (obj) { obj._id = obj.id; }); // adding the _id - as per the model expected by the client
         result = result[0];
         res.status(200).json(result);
 
@@ -82,10 +82,44 @@ router.get('/acquisition/:id', (req, res, next) => {
 );
 
 
+router.get('/history/:id', (req, res, next) => {
+    // sample call: http://18.207.167.245:6001/history/ACQS-00-1
+    let _id = req.params.id;
+
+    var requestById = {
+        //targets : --- (imp parameter) letting this default to the peers assigned to the channel ( MC: in our case supplychainchannel- to be used in case of multi channel)
+        chaincodeId: 'asset',
+        fcn: 'getHistoryForAsset',
+        //args: ["ACQS-00-0"]
+        args: [_id]
+    };
+
+    // debug: console.log("id: "+ _id);
+    query.query(requestById).then(function (final_result) {
+
+        const common = require('../lib/common');
+        const ed = new common.EncryptDecrypt();
+        // formating to meet client spec
+        result = JSON.parse(final_result);
+        decryptData = result.map(item => {
+            if (item.Value.data) {
+                return JSON.parse(ed.decrypt(item.Value.data));
+            } else {
+                return item;
+            }
+        });
+//        result.forEach(function (obj) { obj._id = obj.id; }); // adding the _id - as per the model expected by the client
+//        result = result[0];
+        res.status(200).json(result);
+
+    });
+}
+);
+
 
 
 router.post('/acquisition/create', function (req, res, next) {
-    //sample call: http://18.207.167.245:6001/acquisition/create  . call type: POST . body type: (raw - JSON (application/json)). body content: the asset as valid json object, e.g {"name":"Labs-99-9999","agency":"ABC",.....}   
+    //sample call: http://18.207.167.245:6001/acquisition/create  . call type: POST . body type: (raw - JSON (application/json)). body content: the asset as valid json object, e.g {"name":"Labs-99-9999","agency":"ABC",.....}
     var asset = req.body;
     if (!asset.id) {
         return res.status(400).send('acquisition must have id');
@@ -104,7 +138,7 @@ router.post('/acquisition/create', function (req, res, next) {
 
 
 //router.post('/acquisition/createBulk', function (req, res, next)  {
-// 
+//
 //    var asset=req.body;
 //	// TODO: is asset array of acquisitions ?
 //    const common = require('../lib/common');
@@ -114,7 +148,7 @@ router.post('/acquisition/create', function (req, res, next) {
 //          res.send(err);
 //         }
 //         res.status(200).json(asset);
-//     });   
+//     });
 //  }
 // );
 
