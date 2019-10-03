@@ -97,19 +97,8 @@ router.get('/history/:id', (req, res, next) => {
     // debug: console.log("id: "+ _id);
     query.query(requestById).then(function (final_result) {
 
-        const common = require('../lib/common');
-        const ed = new common.EncryptDecrypt();
         // formating to meet client spec
         result = JSON.parse(final_result);
-        decryptData = result.map(item => {
-            if (item.Value.data) {
-                return JSON.parse(ed.decrypt(item.Value.data));
-            } else {
-                return item;
-            }
-        });
-//        result.forEach(function (obj) { obj._id = obj.id; }); // adding the _id - as per the model expected by the client
-//        result = result[0];
         res.status(200).json(result);
 
     });
