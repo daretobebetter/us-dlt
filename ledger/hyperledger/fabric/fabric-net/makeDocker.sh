@@ -304,7 +304,7 @@ function writePeer {
       - CORE_PEER_MSPCONFIGPATH=$MYHOME/msp
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=net_${NETWORK}
-      - CORE_LOGGING_LEVEL=DEBUG
+      - CORE_LOGGING_LEVEL=INFO
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=$MYHOME/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=$MYHOME/tls/server.key
