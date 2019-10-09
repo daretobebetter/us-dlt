@@ -270,7 +270,7 @@ function writePeer {
    MYHOME=/opt/gopath/src/github.com/hyperledger/fabric/peer
    echo "  couchdb-$PEER_NAME:
     container_name: couchdb-$PEER_NAME
-    image: hyperledger/fabric-couchdb
+    image: hyperledger/fabric-couchdb:0.4.15
     # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
     # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
     environment:
