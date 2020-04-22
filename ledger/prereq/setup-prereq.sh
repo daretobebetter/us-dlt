@@ -1,5 +1,5 @@
 #!/bin/bash
-
+  
 
 echo "Installing cURL..."
 sudo apt-get install curl -y
@@ -23,6 +23,10 @@ sudo tar -C /usr/local -zxvf ./go1.11.2.linux-amd64.tar.gz
 echo "Install Node.js Runtime and NPM..."
 sudo tar -C /usr/local -zxvf ./node-v8.9.3.tar.gz
 
+sudo chown -R dlt.dlt /usr/local/node
+
+export PATH=$PATH:/usr/local/go/bin:/usr/local/bin:/usr/local/node/bin
+export GOPATH=/opt/gopath
 echo "Upgrade NPM to version 5.6.0..."
 npm install npm@5.6.0 -g
 

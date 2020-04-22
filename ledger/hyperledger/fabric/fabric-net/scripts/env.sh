@@ -1,14 +1,13 @@
 #!/bin/bash
-#
-# Copyright IBM Corp. All Rights Reserved.
-#
-# SPDX-License-Identifier: Apache-2.0
-#
 
 #
 # The following variables describe the topology and may be modified to provide
 # different organization names or the number of peers in each peer organization.
 #
+ST="Maryland"
+L="Rockville"
+O="United Solutions"
+OU="IT"
 
 # Name of the docker-compose network
 NETWORK=fabric-net
@@ -17,7 +16,7 @@ NETWORK=fabric-net
 ORDERER_ORGS="orderer.unitedsolutions.biz"
 
 # Names of the peer organizations
-PEER_ORGS="peer.unitedsolutions.biz"
+PEER_ORGS="peer.unitedsolutions.biz peer.unitedsolutions.com peer.unitedsolutions.net peer.unitedsolutions.us peer.unitedsolutions.io"
 
 # Number of peers in each peer organization
 NUM_PEERS=2
@@ -158,7 +157,7 @@ function initOrdererVars {
    MYHOME=/etc/hyperledger/orderer
 
    export FABRIC_CA_CLIENT=$MYHOME
-   export ORDERER_GENERAL_LOGLEVEL=debug
+   export ORDERER_GENERAL_LOGLEVEL=INFO
    export ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
    export ORDERER_GENERAL_GENESISMETHOD=file
    export ORDERER_GENERAL_GENESISFILE=$GENESIS_BLOCK_FILE
@@ -183,7 +182,7 @@ function genClientTLSCert {
    KEY_FILE=$3
 
    # Get a client cert
-   fabric-ca-client enroll -d --enrollment.profile tls -u $ENROLLMENT_URL -M /tmp/tls --csr.hosts $HOST_NAME
+   /opt/hyperledger/bin/fabric-ca-client enroll -d --enrollment.profile tls -u $ENROLLMENT_URL -M /tmp/tls --csr.hosts $HOST_NAME
 
    mkdir /$DATA/tls || true
    cp /tmp/tls/signcerts/* $CERT_FILE
@@ -217,8 +216,7 @@ function initPeerVars {
    # https://docs.docker.com/compose/networking/
    #export CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=${COMPOSE_PROJECT_NAME}_${NETWORK}
    export CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=net_${NETWORK}
-   # export CORE_LOGGING_LEVEL=ERROR
-   export CORE_LOGGING_LEVEL=DEBUG
+   export CORE_LOGGING_LEVEL=INFO
    export CORE_PEER_TLS_ENABLED=true
    export CORE_PEER_TLS_CLIENTAUTHREQUIRED=true
    export CORE_PEER_TLS_ROOTCERT_FILE=$CA_CHAINFILE

@@ -1,12 +1,6 @@
 #!/bin/bash
 #
-# Copyright IBM Corp. All Rights Reserved.
-#
-# SPDX-License-Identifier: Apache-2.0
-#
-
-#
-# This script does everything required to run the fabric CA sample.
+# This script does everything required to run the Fabric Network
 #
 
 set -e

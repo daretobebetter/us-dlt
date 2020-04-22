@@ -1,12 +1,6 @@
 #!/bin/bash
 #
-# Copyright IBM Corp. All Rights Reserved.
-#
-# SPDX-License-Identifier: Apache-2.0
-#
-
-#
-# This script builds the docker compose file needed to run this sample.
+# This script builds the docker compose file needed to run Fabric Network.
 #
 
 SDIR=$(dirname "$0")
@@ -39,7 +33,7 @@ function writeRootFabricCA {
 
 # Write services for the intermediate fabric CA servers
 function writeIntermediateFabricCA {
-   PREFIXPORT=10
+   PREFIXPORT=20
    for ORG in $ORGS; do
       initOrgVars $ORG
       ICAPORT="${PREFIXPORT}054"
@@ -177,7 +171,7 @@ function writeCLI {
 function writeRootCA {
    echo "  $ROOT_CA_NAME:
     container_name: $ROOT_CA_NAME
-    image: hyperledger/fabric-ca
+    image: hyperledger/fabric-ca:1.4.4
     command: /bin/bash -c '/scripts/start-root-ca.sh 2>&1 | tee /$ROOT_CA_LOGFILE'
     environment:
       - FABRIC_CA_SERVER_HOME=/etc/hyperledger/fabric-ca
@@ -201,7 +195,7 @@ function writeRootCA {
 function writeIntermediateCA {
    echo "  $INT_CA_NAME:
     container_name: $INT_CA_NAME
-    image: hyperledger/fabric-ca
+    image: hyperledger/fabric-ca:1.4.4
     command: /bin/bash -c '/scripts/start-intermediate-ca.sh $ORG 2>&1 | tee /$INT_CA_LOGFILE'
     environment:
       - FABRIC_CA_SERVER_HOME=/etc/hyperledger/fabric-ca
@@ -231,7 +225,7 @@ function writeOrderer {
    MYHOME=/etc/hyperledger/orderer
    echo "  $ORDERER_NAME:
     container_name: $ORDERER_NAME
-    image: hyperledger/fabric-ca-orderer
+    image: hyperledger/fabric-orderer:1.4.4
     environment:
       - FABRIC_CA_CLIENT_HOME=$MYHOME
       - FABRIC_CA_CLIENT_TLS_CERTFILES=$CA_CHAINFILE
@@ -249,12 +243,13 @@ function writeOrderer {
       - ORDERER_GENERAL_TLS_ROOTCAS=[$CA_CHAINFILE]
       - ORDERER_GENERAL_TLS_CLIENTAUTHREQUIRED=true
       - ORDERER_GENERAL_TLS_CLIENTROOTCAS=[$CA_CHAINFILE]
-      - ORDERER_GENERAL_LOGLEVEL=DEBUG
+      - ORDERER_GENERAL_LOGLEVEL=INFO
       - ORDERER_DEBUG_BROADCASTTRACEDIR=$LOGDIR
       - ORG=$ORG
       - ORG_ADMIN_CERT=$ORG_ADMIN_CERT
     command: /bin/bash -c '/scripts/start-orderer.sh 2>&1 | tee /$ORDERER_LOGFILE'
     volumes:
+      - ./bin:/opt/hyperledger/bin
       - ./scripts:/scripts
       - ./$DATA:/$DATA
     networks:
@@ -270,7 +265,7 @@ function writePeer {
    MYHOME=/opt/gopath/src/github.com/hyperledger/fabric/peer
    echo "  couchdb-$PEER_NAME:
     container_name: couchdb-$PEER_NAME
-    image: hyperledger/fabric-couchdb:0.4.15
+    image: hyperledger/fabric-couchdb:0.4.18
     # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
     # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
     environment:
@@ -285,7 +280,7 @@ function writePeer {
 "
    echo "  $PEER_NAME:
     container_name: $PEER_NAME
-    image: hyperledger/fabric-ca-peer
+    image: hyperledger/fabric-peer:1.4.4
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb-$PEER_NAME:5984
@@ -325,6 +320,7 @@ function writePeer {
    echo "    working_dir: $MYHOME
     command: /bin/bash -c '/scripts/start-peer.sh 2>&1 | tee /$PEER_LOGFILE'
     volumes:
+      - ./bin:/opt/hyperledger/bin
       - ./scripts:/scripts
       - ./$DATA:/$DATA
       - /var/run:/host/var/run

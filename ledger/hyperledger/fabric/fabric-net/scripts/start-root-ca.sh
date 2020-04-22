@@ -1,16 +1,8 @@
 #!/bin/bash
 #
-# Copyright IBM Corp. All Rights Reserved.
-#
-# SPDX-License-Identifier: Apache-2.0
-#
 
 set -e
-
-ST="Maryland"
-L="Rockville"
-O="United Solutions LLC"
-OU="IT"
+source $(dirname "$0")/env.sh
 
 # Initialize the root CA
 fabric-ca-server init -b $BOOTSTRAP_USER_PASS

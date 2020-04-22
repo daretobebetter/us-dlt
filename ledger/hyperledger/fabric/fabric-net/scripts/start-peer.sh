@@ -1,9 +1,5 @@
 #!/bin/bash
 #
-# Copyright IBM Corp. All Rights Reserved.
-#
-# SPDX-License-Identifier: Apache-2.0
-#
 
 set -e
 
@@ -15,7 +11,7 @@ awaitSetup
 # we generate a different key and certificate for inbound and outbound TLS simply to show that it is permissible
 
 # Generate server TLS cert and key pair for the peer
-fabric-ca-client enroll -d --enrollment.profile tls -u $ENROLLMENT_URL -M /tmp/tls --csr.hosts $PEER_HOST 
+/opt/hyperledger/bin/fabric-ca-client enroll -d --enrollment.profile tls -u $ENROLLMENT_URL -M /tmp/tls --csr.hosts $PEER_HOST 
 
 # Copy the TLS key and cert to the appropriate place
 TLSDIR=$PEER_HOME/tls
@@ -31,7 +27,7 @@ genClientTLSCert $PEER_NAME $CORE_PEER_TLS_CLIENTCERT_FILE $CORE_PEER_TLS_CLIENT
 genClientTLSCert $PEER_NAME /$DATA/tls/$PEER_NAME-cli-client.crt /$DATA/tls/$PEER_NAME-cli-client.key
 
 # Enroll the peer to get an enrollment certificate and set up the core's local MSP directory
-fabric-ca-client enroll -d -u $ENROLLMENT_URL -M $CORE_PEER_MSPCONFIGPATH
+/opt/hyperledger/bin/fabric-ca-client enroll -d -u $ENROLLMENT_URL -M $CORE_PEER_MSPCONFIGPATH
 finishMSPSetup $CORE_PEER_MSPCONFIGPATH
 copyAdminCert $CORE_PEER_MSPCONFIGPATH
 

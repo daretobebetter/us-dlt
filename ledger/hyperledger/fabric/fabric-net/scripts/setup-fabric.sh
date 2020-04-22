@@ -1,11 +1,5 @@
 #!/bin/bash
 #
-# Copyright IBM Corp. All Rights Reserved.
-#
-# SPDX-License-Identifier: Apache-2.0
-#
-
-#
 # This script does the following:
 # 1) registers orderer and peer identities with intermediate fabric-ca-servers
 # 2) Builds the channel artifacts (e.g. genesis block, etc)

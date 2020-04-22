@@ -1,9 +1,4 @@
 #!/bin/bash
-#
-# Copyright IBM Corp. All Rights Reserved.
-#
-# SPDX-License-Identifier: Apache-2.0
-#
 
 set -e
 
@@ -116,7 +111,7 @@ function createChannel {
    initPeerVars ${PORGS[0]} 1
    switchToAdminIdentity
    logr "Creating channel '$CHANNEL_NAME' on $ORDERER_HOST ..."
-   peer channel create --logging-level=DEBUG -c $CHANNEL_NAME -f $CHANNEL_TX_FILE $ORDERER_CONN_ARGS
+   peer channel create --logging-level=INFO -c $CHANNEL_NAME -f $CHANNEL_TX_FILE $ORDERER_CONN_ARGS
 }
 
 # Enroll as a fabric admin and join the channel
@@ -216,7 +211,7 @@ function makePolicy  {
 function installChaincode {
    switchToAdminIdentity
    logr "Installing chaincode on $PEER_HOST ..."
-   peer chaincode install -n mycc -v 1.0 -l node -p /opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode/chaincode_example02/node
+   peer chaincode install -n mycc -v 1.0 -l node -p /opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode/chaincode_test/node
    peer chaincode install -n asset -v 1.0 -l node -p /opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode/asset/node
 }
 

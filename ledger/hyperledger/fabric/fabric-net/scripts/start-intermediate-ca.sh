@@ -1,17 +1,8 @@
 #!/bin/bash
 #
-# Copyright IBM Corp. All Rights Reserved.
-#
-# SPDX-License-Identifier: Apache-2.0
-#
 
 source $(dirname "$0")/env.sh
 initOrgVars $ORG
-
-ST="Maryland"
-L="Rockville"
-O="United Solutions LLC"
-OU="IT"
 
 set -e
 
