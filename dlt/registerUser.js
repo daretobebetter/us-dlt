@@ -45,7 +45,7 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
     	verify: false
     };
     // be sure to change the http to https when the CA is running TLS enabled
-    fabric_ca_client = new Fabric_CA_Client('https://'+env.settings.DLT_IP+':11054', tlsOptions , env.settings.PEERICA, crypto_suite);
+    fabric_ca_client = new Fabric_CA_Client('https://'+env.settings.DLT_IP+':21054', tlsOptions , env.settings.PEERICA, crypto_suite);
 
     // first check to see if the admin is already enrolled
     return fabric_client.getUserContext('admin', true);
